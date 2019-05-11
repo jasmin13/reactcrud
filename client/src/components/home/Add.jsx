@@ -63,7 +63,7 @@ class Add extends Component {
               <div className="col card hoverable s10 pull-s1 m6 pull-m3 l0 pull-l0">
                 <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                   <div className="card-content">
-                    <h5 className="grey-text text-darken-3">Sign Up</h5>
+                    <h5 className="grey-text text-darken-3">Add Form</h5>
                     <div className="row">
                       <div className="input-field col s12">
                         <Field
