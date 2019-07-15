@@ -1,17 +1,14 @@
 import React, { Component } from "react";
-import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { editUser, getUser } from "./../../store/actions/userAction";
 import { Field, reduxForm, change } from "redux-form";
-//import renderField from "./../../utils/renderField";
 import { required, phoneNumber, email } from "../../validation/validate";
 
 const form = reduxForm({
   form: "Edit"
 });
-
 const renderField = ({
   defaultValue,
   input,
@@ -34,58 +31,41 @@ const renderField = ({
 };
 
 class Edit extends Component {
-  constructor() {
-    super();
-    this.state = {
-      errors: {},
-      user: { firstName: "", lastName: "", email: "", phone: "" }
-    };
+  constructor(props) {
+    super(props);
   }
 
   handleChange = e => {
     const { id, value } = e.target;
 
-    this.setState({
-      [id]: value
-    });
+    this.props.dispatch(change("Edit", id, value));
   };
 
-  handleFormSubmit = () => {
-    const userData = {
-      id: this.state.user._id,
-      firstName: this.state.firstName
-        ? this.state.firstName
-        : this.state.user.firstName,
-      lastName: this.state.lastName
-        ? this.state.lastName
-        : this.state.user.lastName,
-      email: this.state.email ? this.state.email : this.state.user.email,
-      phone: this.state.phone ? this.state.phone : this.state.user.phone
-    };
-    this.props.editUser(userData, this.props.history);
+  handleFormSubmit = user => {
+    this.props.editUser({ ...user, id: this.props.id }, this.props.history);
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
-
-    if (nextProps.user) {
-      this.setState({
-        user: nextProps.user
-      });
-    }
+    const {
+      firstName: oFirstName,
+      lastName: oLastName,
+      email: oEmail,
+      phone: oPhone
+    } = this.props.user;
+    const { firstName, lastName, email, phone } = nextProps.user;
+    oFirstName !== firstName &&
+      this.props.dispatch(change("Edit", "firstName", firstName));
+    oLastName !== lastName &&
+      this.props.dispatch(change("Edit", "lastName", lastName));
+    oEmail !== email && this.props.dispatch(change("Edit", "email", email));
+    oPhone !== phone && this.props.dispatch(change("Edit", "phone", phone));
   }
 
   componentDidMount() {
-    this.props.getUser(this.props.match.params.id, this.props.history);
+    this.props.getUser(this.props.id, this.props.history);
   }
 
   render() {
-    const { user } = this.state;
     const { handleSubmit, submitting } = this.props;
     return (
       <div className="container">
@@ -104,7 +84,6 @@ class Edit extends Component {
                           name="firstName"
                           type="text"
                           onChange={this.handleChange}
-                          defaultValue={user.firstName}
                           component={renderField}
                           validate={required}
                         />
@@ -116,7 +95,6 @@ class Edit extends Component {
                           name="lastName"
                           type="text"
                           onChange={this.handleChange}
-                          defaultValue={user.lastName}
                           component={renderField}
                           validate={required}
                         />
@@ -128,7 +106,6 @@ class Edit extends Component {
                           name="email"
                           type="text"
                           onChange={this.handleChange}
-                          defaultValue={user.email}
                           component={renderField}
                           validate={[required, email]}
                         />
@@ -140,7 +117,6 @@ class Edit extends Component {
                           id="phone"
                           name="phone"
                           onChange={this.handleChange}
-                          defaultValue={user.phone}
                           component={renderField}
                           validate={[required, phoneNumber]}
                         />

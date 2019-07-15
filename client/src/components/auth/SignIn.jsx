@@ -69,7 +69,6 @@ class SignIn extends Component {
               <div className="col card hoverable s10 pull-s1 m6 pull-m3 l0 pull-l0">
                 <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                   <div className="card-content">
-                    <h5 className="grey-text text-darken-3">Sign In</h5>
                     {Object.keys(errors).length !== 0 ? (
                       <div className="card red darken-1">
                         <div className="card-content white-text">
@@ -88,6 +87,7 @@ class SignIn extends Component {
                     ) : (
                       ""
                     )}
+                    <h5 className="grey-text text-darken-3">Sign In</h5>
                     <div className="row">
                       <div className="input-field col s12">
                         <Field

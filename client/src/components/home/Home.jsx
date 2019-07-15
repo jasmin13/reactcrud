@@ -47,9 +47,11 @@ class Home extends Component {
   render() {
     const { person } = this.props.user;
     const per = Object.keys(person);
+
     return (
       <div>
         <div className="row">
+          <div className="col s1" />
           <div className="col s10">
             <div className="col s7 left">
               <h4 className="header left">React Crud</h4>
@@ -65,6 +67,7 @@ class Home extends Component {
               </span>
             </div>
           </div>
+          <div className="col s1" />
         </div>
 
         <div className="row">
@@ -85,6 +88,7 @@ class Home extends Component {
         </div>
 
         <div className="row">
+          <div className="col s1" />
           <div className="col s10">
             {Object.keys(this.props.success).length !== 0 ? (
               <div className="card green darken-1">
@@ -132,6 +136,7 @@ class Home extends Component {
               </tbody>
             </table>
           </div>
+          <div className="col s1" />
         </div>
       </div>
     );

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter, NavLink } from "react-router-dom";
 import { logoutUser, getCurrentUser } from "./../../store/actions/authAction";
-//import SignedInLinks from "./SignedInLinks";
 import SignedOutLinks from "./SignedOutLinks";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
